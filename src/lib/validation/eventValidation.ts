@@ -15,15 +15,15 @@ export const eventFormSchema = z.object({
     .min(1, 'Event description is required')
     .max(1000, 'Event description must not exceed 1000 characters'),
   
-  startDate: z.date({
-    required_error: 'Start date is required',
-    invalid_type_error: 'Invalid start date',
-  }),
+  startDate: z.date().catch(() => new Date()).refine(
+    (date) => date instanceof Date && !isNaN(date.getTime()),
+    'Invalid start date'
+  ),
   
-  endDate: z.date({
-    required_error: 'End date is required',
-    invalid_type_error: 'Invalid end date',
-  }),
+  endDate: z.date().catch(() => new Date()).refine(
+    (date) => date instanceof Date && !isNaN(date.getTime()),
+    'Invalid end date'
+  ),
   
   location: z
     .string()

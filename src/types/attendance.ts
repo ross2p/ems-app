@@ -1,8 +1,4 @@
-/**
- * Attendance Types
- */
-
-import { User } from './user';
+import { UserProfile as User } from './user';
 import { Event } from './event';
 
 export interface Attendance {
