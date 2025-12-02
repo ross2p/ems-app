@@ -1,15 +1,10 @@
-/**
- * Protected page wrapper component
- * Redirects to login if user is not authenticated
- */
-
 'use client';
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks';
-import { Loading } from '@/components/common';
 import type { ReactNode } from 'react';
+import { Loading } from './common/Loading';
 
 interface ProtectedPageProps {
   children: ReactNode;

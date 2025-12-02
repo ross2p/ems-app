@@ -3,16 +3,9 @@
 import { Box, Card as MuiCard, CardContent, Typography } from '@mui/material';
 import type { ReactNode } from 'react';
 
-/**
- * Auth card container component
- * Provides a styled card layout for authentication forms
- */
 interface AuthCardProps {
-  /** Card title */
   title: string;
-  /** Optional subtitle */
   subtitle?: string;
-  /** Card content/children */
   children: ReactNode;
 }
 

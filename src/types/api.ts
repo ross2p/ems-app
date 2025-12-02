@@ -19,3 +19,14 @@ export interface PaginatedResponse<T> {
   limit: number;
   totalPages: number;
 }
+
+/**
+ * Page response from backend - matches PageResponse util class
+ */
+export interface PageResponse<T> {
+  content: T[];
+  totalElements: number;
+  totalPages: number;
+  pageNumber: number;
+  pageSize: number;
+}

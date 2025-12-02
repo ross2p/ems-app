@@ -1,7 +1,7 @@
 'use client';
 
+import { DashboardLayout } from '@/containers/dashboard/DashboardLayout';
 import type { ReactNode } from 'react';
-import { DashboardLayout } from '@/containers/dashboard';
 
 export default function DashboardLayoutWrapper({
   children,

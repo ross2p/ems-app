@@ -1,11 +1,13 @@
-import { AuthCard, LoginForm } from '@/containers';
+import { AuthCard } from "@/components/auth/AuthCard"
+import { LoginForm } from "@/components/auth/LoginForm"
 
 export default function LoginRoute() {
-  return  
+  return ( 
     <AuthCard
         title="Welcome Back"
         subtitle="Sign in to your account to continue"
       >
         <LoginForm />
-      </AuthCard>
+    </AuthCard>
+  )
 }

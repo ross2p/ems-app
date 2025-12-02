@@ -1,8 +1,6 @@
-import { AuthCard, RegisterForm } from '@/containers';
+import { AuthCard } from "@/components/auth/AuthCard"
+import { RegisterForm } from "@/components/auth/RegisterForm"
 
-/**
- * Registration page route
- */
 export default function RegisterRoute() {
   return  <AuthCard
       title="Create Account"

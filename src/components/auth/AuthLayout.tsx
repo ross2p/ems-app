@@ -3,12 +3,7 @@
 import { Box } from '@mui/material';
 import type { ReactNode } from 'react';
 
-/**
- * Auth layout wrapper component
- * Provides consistent layout for authentication pages
- */
 interface AuthLayoutProps {
-  /** Page content */
   children: ReactNode;
 }
 

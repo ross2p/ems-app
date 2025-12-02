@@ -7,13 +7,9 @@ import { Box, Alert, AlertTitle, AlertProps } from '@mui/material';
  * Displays contextual messages with appropriate severity levels
  */
 interface ErrorMessageProps extends Omit<AlertProps, 'children'> {
-  /** Error or message text */
   message: string;
-  /** Optional title for the alert */
   title?: string;
-  /** Severity level of the alert */
   severity?: 'error' | 'warning' | 'info' | 'success';
-  /** Optional action callback */
   onDismiss?: () => void;
 }
 

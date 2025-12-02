@@ -3,22 +3,12 @@
 import { Control, FieldValues, Path } from 'react-hook-form';
 import { FormField } from './FormField';
 
-/**
- * Name input field component
- * Validates names with proper formatting
- */
 interface NameFieldProps<T extends FieldValues> {
-  /** Field name (must match form schema) */
   name: Path<T>;
-  /** React-hook-form control object */
   control: Control<T>;
-  /** Field label */
   label?: string;
-  /** Whether field is required (optional) */
   required?: boolean;
-  /** Whether field is disabled (optional) */
   disabled?: boolean;
-  /** Placeholder text (optional) */
   placeholder?: string;
 }
 

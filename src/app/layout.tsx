@@ -5,12 +5,13 @@ import { CssBaseline } from '@mui/material';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { theme } from '@/styles/theme';
 import { AuthProvider } from '@/context/AuthContext';
+import { GoogleMapsProvider } from '@/context/GoogleMapsContex';
 import '@/styles/globals.css';
 import { useState } from 'react';
 
 /**
  * Root layout component with providers
- * Sets up MUI theme, React Query, and Auth context for the entire app
+ * Sets up MUI theme, React Query, Auth context, and Google Maps for the entire app
  */
 export default function RootLayout({
   children,
@@ -37,9 +38,11 @@ export default function RootLayout({
         <QueryClientProvider client={queryClient}>
           <ThemeProvider theme={theme}>
             <CssBaseline />
-            <AuthProvider>
-              {children}
-            </AuthProvider>
+            <GoogleMapsProvider>
+              <AuthProvider>
+                {children}
+              </AuthProvider>
+            </GoogleMapsProvider>
           </ThemeProvider>
         </QueryClientProvider>
       </body>

@@ -1,19 +1,12 @@
 'use client';
 
 import { Controller, Control, FieldValues, Path } from 'react-hook-form';
-import { TextField } from '@/components/common';
+import { TextField } from '@/components/common/TextField';
 import type { TextFieldProps } from '@mui/material';
 
-/**
- * Generic form field component that integrates with react-hook-form
- * Provides automatic validation error display
- */
 interface FormFieldProps<T extends FieldValues> extends Omit<TextFieldProps, 'name'> {
-  /** Field name (must match form schema) */
   name: Path<T>;
-  /** React-hook-form control object */
   control: Control<T>;
-  /** Field label */
   label: string;
 }
 

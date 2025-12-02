@@ -1,18 +1,16 @@
 'use client';
 
-import { Box, CircularProgress, Typography } from '@mui/material';
+import { Box, CircularProgress, Typography, Button } from '@mui/material';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRegister } from '@/hooks/api';
 import { registerSchema, type RegisterFormData } from '@/lib/validation';
-import { EmailField, PasswordField, NameField } from '@/components/forms';
-import { Button, ErrorMessage } from '@/components/common';
+import { EmailField } from '@/components/forms/EmailField';
+import { PasswordField } from '@/components/forms/PasswordField';
+import { NameField } from '@/components/forms/NameField';
+import { ErrorMessage } from '@/components/common/ErrorMessage';
 import Link from 'next/link';
 
-/**
- * Registration form component
- * Handles new user account creation
- */
 export function RegisterForm() {
   const { mutate: register, isPending, error, isError } = useRegister();
   const { control, handleSubmit, formState: { isValid } } = useForm<RegisterFormData>({

@@ -50,6 +50,7 @@ export const API_ROUTES = {
   EVENT: {
     LIST: '/event',
     GET: (id: string) => `/event/${id}`,
+    SIMILAR: (id: string) => `/event/${id}/similar`,
     CREATE: '/event',
     UPDATE: (id: string) => `/event/${id}`,
     DELETE: (id: string) => `/event/${id}`,
@@ -100,6 +101,18 @@ export const AUTH = {
   NAME_MIN_LENGTH: 2,
   NAME_MAX_LENGTH: 50,
   TOKEN_REFRESH_THRESHOLD: 5 * 60 * 1000, // 5 minutes before expiry
+} as const;
+
+/**
+ * Google Maps Configuration
+ */
+export const MAPS_CONFIG = {
+  API_KEY: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '',
+  DEFAULT_CENTER: {
+    lat: 40.7128, // New York City
+    lng: -74.006,
+  },
+  DEFAULT_ZOOM: 13,
 } as const;
 
 /**

@@ -35,6 +35,13 @@ export function normalizeError(error: unknown): AppError {
   };
 }
 
+/**
+ * Extract user-friendly error message from any error type
+ */
+export function getErrorMessage(error: unknown): string {
+  const normalized = normalizeError(error);
+  return getUserFriendlyErrorMessage(normalized);
+}
 
 export function getUserFriendlyErrorMessage(error: AppError): string {
   const { statusCode, message } = error;
@@ -71,4 +78,12 @@ export function isNetworkError(error: AppError): boolean {
 
 export function isServerError(error: AppError): boolean {
   return error.statusCode >= 500;
+}
+
+export function isValidationError(error: AppError): boolean {
+  return error.statusCode === 400 || error.statusCode === 422;
+}
+
+export function isNotFoundError(error: AppError): boolean {
+  return error.statusCode === 404;
 }

@@ -1,7 +1,7 @@
 'use client';
 
+import { AuthLayout } from '@/components/auth/AuthLayout';
 import type { ReactNode } from 'react';
-import { AuthLayout } from '@/containers/auth';
 
 export default function AuthLayoutWrapper({
   children,
