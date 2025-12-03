@@ -44,9 +44,10 @@ export function EventFilters({
     }, 300);
 
     return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchValue]);
 
-  const handleChange = (key: keyof EventFiltersType, value: any) => {
+  const handleChange = (key: keyof EventFiltersType, value: string | undefined) => {
     onFiltersChange({ ...filters, [key]: value || undefined });
   };
 

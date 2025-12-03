@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Typography, Stack, CircularProgress, Alert } from '@mui/material';
+import { Box, Typography, CircularProgress, Alert } from '@mui/material';
 import { Event } from '@/types';
 import { EventCard } from './EventCard';
 

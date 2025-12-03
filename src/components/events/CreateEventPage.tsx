@@ -1,15 +1,16 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Container, Alert } from '@mui/material';
 import { EventForm } from '@/components/events/EventForm';
 import { useCreateEvent } from '@/hooks/api/useEvents';
-import { useEventNavigation } from '@/hooks/useEventNavigation';
 import { EventFormData } from '@/lib/validation/eventValidation';
 import { getErrorMessage } from '@/lib/utils/errorHandler';
+import { ROUTES } from '@/lib/constants/routes';
 
 export function CreateEventPage() {
-  const { navigateToList } = useEventNavigation();
+  const router = useRouter();
   const createEvent = useCreateEvent();
   const [error, setError] = useState<string | null>(null);
 
@@ -28,7 +29,7 @@ export function CreateEventPage() {
         categoryId: data.categoryId,
       });
 
-      navigateToList();
+      router.push(ROUTES.DASHBOARD.EVENTS.LIST);
     } catch (err) {
       setError(getErrorMessage(err));
       console.error('Error creating event:', err);
@@ -45,7 +46,7 @@ export function CreateEventPage() {
 
       <EventForm
         onSubmit={handleSubmit}
-        onCancel={navigateToList}
+        onCancel={() => router.push(ROUTES.DASHBOARD.EVENTS.LIST)}
         isSubmitting={createEvent.isPending}
         mode="create"
       />

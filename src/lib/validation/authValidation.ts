@@ -1,9 +1,5 @@
 import { z } from 'zod';
-import { AUTH, REGEX } from '../config';
 
-/**
- * Email validation schema
- */
 const emailSchema = z
   .string()
   .min(1, 'Email is required')
@@ -11,32 +7,24 @@ const emailSchema = z
   .toLowerCase()
   .trim();
 
-/**
- * Password validation schema
- */
 const passwordSchema = z
   .string()
-  .min(AUTH.PASSWORD_MIN_LENGTH, `Password must be at least ${AUTH.PASSWORD_MIN_LENGTH} characters`)
-  .max(AUTH.PASSWORD_MAX_LENGTH, `Password must be less than ${AUTH.PASSWORD_MAX_LENGTH} characters`)
+  .min(1, 'Password is required')
+  .min(6, 'Password must be at least 6 characters')
+  .max(50, 'Password must be less than 50 characters')
   .regex(
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
     'Password must contain uppercase, lowercase, and numbers',
   );
 
-/**
- * Name validation schema
- */
 const nameSchema = z
   .string()
   .min(1, 'Name is required')
-  .min(AUTH.NAME_MIN_LENGTH, `Name must be at least ${AUTH.NAME_MIN_LENGTH} characters`)
-  .max(AUTH.NAME_MAX_LENGTH, `Name must be less than ${AUTH.NAME_MAX_LENGTH} characters`)
+  .min(2, 'Name must be at least 2 characters')
+  .max(50, 'Name must be less than 50 characters')
   .regex(/^[a-zA-Z\s'-]+$/, 'Name can only contain letters, spaces, hyphens, and apostrophes')
   .trim();
 
-/**
- * Login form validation
- */
 export const loginSchema = z.object({
   email: emailSchema,
   password: z.string().min(1, 'Password is required'),
@@ -44,9 +32,6 @@ export const loginSchema = z.object({
 
 export type LoginFormData = z.infer<typeof loginSchema>;
 
-/**
- * Register form validation
- */
 export const registerSchema = z
   .object({
     email: emailSchema,
@@ -62,9 +47,6 @@ export const registerSchema = z
 
 export type RegisterFormData = z.infer<typeof registerSchema>;
 
-/**
- * Password reset validation
- */
 export const passwordResetSchema = z
   .object({
     newPassword: passwordSchema,

@@ -1,5 +1,4 @@
 import { apiClient } from './client';
-import { API_ROUTES } from '../config';
 import type { Category, GlobalResponse, PageResponse } from '@/types';
 
 export interface CreateCategoryDto {
@@ -15,7 +14,7 @@ export interface CategoryListParams {
 export const categoryService = {
   getCategories: async (params?: CategoryListParams): Promise<PageResponse<Category>> => {
     const response = await apiClient.get<GlobalResponse<PageResponse<Category>>>(
-      API_ROUTES.CATEGORY.LIST,
+      '/category',
       { params },
     );
 
@@ -28,7 +27,7 @@ export const categoryService = {
 
   getCategoryById: async (id: string): Promise<Category> => {
     const response = await apiClient.get<GlobalResponse<Category>>(
-      API_ROUTES.CATEGORY.GET(id),
+      `/category/${id}`,
     );
 
     if (!response.data.data) {
@@ -40,7 +39,7 @@ export const categoryService = {
 
   createCategory: async (data: CreateCategoryDto): Promise<Category> => {
     const response = await apiClient.post<GlobalResponse<Category>>(
-      API_ROUTES.CATEGORY.CREATE,
+      '/category',
       data,
     );
 

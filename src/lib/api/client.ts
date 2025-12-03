@@ -1,16 +1,11 @@
 import axios, { AxiosInstance, AxiosError, AxiosRequestConfig } from 'axios';
-import { API_CONFIG, HTTP_STATUS } from '../config';
+import { API_CONFIG } from '../config';
 import { tokenStorage } from '../storage';
-import type { GlobalResponse, ApiErrorResponse } from '@/types';
-
-let authServiceImported: any = null;
+import { authService } from './authService';
+import type { ApiErrorResponse } from '@/types';
 
 const getAuthService = async () => {
-  if (!authServiceImported) {
-    const module = await import('./authService');
-    authServiceImported = module.authService;
-  }
-  return authServiceImported;
+  return authService;
 };
 
 const createAxiosClient = (baseUrl: string): AxiosInstance => {
@@ -29,7 +24,7 @@ const createAxiosClient = (baseUrl: string): AxiosInstance => {
       }
       return config;
     },
-    (error) => {
+    (error: Error) => {
       console.error('[API Request Error]', error);
       return Promise.reject(error);
     },
@@ -41,7 +36,7 @@ const createAxiosClient = (baseUrl: string): AxiosInstance => {
       const originalRequest = error.config as AxiosRequestConfig & { _retry?: boolean };
 
       if (
-        error.response?.status === HTTP_STATUS.UNAUTHORIZED &&
+        error.response?.status === 401 &&
         !originalRequest._retry &&
         originalRequest.url?.includes('/auth/refresh') === false
       ) {
@@ -61,7 +56,7 @@ const createAxiosClient = (baseUrl: string): AxiosInstance => {
             originalRequest.headers.Authorization = `Bearer ${response.accessToken}`;
           }
           return client(originalRequest);
-        } catch (refreshError) {
+        } catch (refreshError: unknown) {
           tokenStorage.clearAll();
           console.error('[Auth] Token refresh failed:', refreshError);
           return Promise.reject(error);
@@ -74,6 +69,7 @@ const createAxiosClient = (baseUrl: string): AxiosInstance => {
 
   return client;
 };
+
 
 export const apiClient = createAxiosClient(API_CONFIG.BASE_URL);
 

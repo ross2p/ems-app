@@ -1,7 +1,3 @@
-/**
- * Event form validation schema using Zod
- */
-
 import { z } from 'zod';
 
 export const eventFormSchema = z.object({

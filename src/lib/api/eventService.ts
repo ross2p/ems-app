@@ -1,5 +1,4 @@
 import { apiClient } from './client';
-import { API_ROUTES } from '../config';
 import type {
   Event,
   CreateEventDto,
@@ -13,7 +12,7 @@ export const eventService = {
   
   getEvents: async (params: EventListParams = {}): Promise<PageResponse<Event>> => {
     const response = await apiClient.get<GlobalResponse<PageResponse<Event>>>(
-      API_ROUTES.EVENT.LIST,
+      '/event',
       { params },
     );
 
@@ -26,7 +25,7 @@ export const eventService = {
 
   getEventById: async (id: string): Promise<Event> => {
     const response = await apiClient.get<GlobalResponse<Event>>(
-      API_ROUTES.EVENT.GET(id),
+      `/event/${id}`,
     );
 
     if (!response.data.data) {
@@ -38,7 +37,7 @@ export const eventService = {
 
   getSimilarEvents: async (id: string): Promise<Event[]> => {
     const response = await apiClient.get<GlobalResponse<Event[]>>(
-      API_ROUTES.EVENT.SIMILAR(id),
+      `/event/${id}/similar`,
     );
 
     if (!response.data.data) {
@@ -50,7 +49,7 @@ export const eventService = {
 
   createEvent: async (data: CreateEventDto): Promise<Event> => {
     const response = await apiClient.post<GlobalResponse<Event>>(
-      API_ROUTES.EVENT.CREATE,
+      '/event',
       data,
     );
 
@@ -63,7 +62,7 @@ export const eventService = {
 
   updateEvent: async (id: string, data: UpdateEventDto): Promise<Event> => {
     const response = await apiClient.patch<GlobalResponse<Event>>(
-      API_ROUTES.EVENT.UPDATE(id),
+      `/event/${id}`,
       data,
     );
 
@@ -75,7 +74,7 @@ export const eventService = {
   },
 
   deleteEvent: async (id: string): Promise<void> => {
-    await apiClient.delete(API_ROUTES.EVENT.DELETE(id));
+    await apiClient.delete(`/event/${id}`);
   },
 };
 

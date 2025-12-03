@@ -1,7 +1,7 @@
 'use client';
 
 import { Controller, Control, FieldValues, Path } from 'react-hook-form';
-import { TextField } from '@/components/common/TextField';
+import { TextField as MuiTextField } from '@mui/material';
 import type { TextFieldProps } from '@mui/material';
 
 interface FormFieldProps<T extends FieldValues> extends Omit<TextFieldProps, 'name'> {
@@ -23,7 +23,7 @@ export function FormField<T extends FieldValues>({
       name={name}
       control={control}
       render={({ field, fieldState: { error } }) => (
-        <TextField
+        <MuiTextField
           {...field}
           {...props}
           label={label}
@@ -32,6 +32,7 @@ export function FormField<T extends FieldValues>({
           error={!!error}
           helperText={error?.message || ''}
           fullWidth
+          variant="outlined"
         />
       )}
     />

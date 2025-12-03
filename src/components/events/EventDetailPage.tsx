@@ -1,19 +1,20 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Container, Box, Alert, CircularProgress, Divider } from '@mui/material';
 import { EventDetail } from '@/components/events/EventDetail';
 import { SimilarEvents } from '@/components/events/SimilarEvents';
 import { ConfirmationDialog } from '@/components/common/ConfirmationDialog';
 import { useEvent, useSimilarEvents, useDeleteEvent } from '@/hooks/api/useEvents';
-import { useEventNavigation } from '@/hooks/useEventNavigation';
+import { ROUTES } from '@/lib/constants/routes';
 
 interface EventDetailPageProps {
   eventId: string;
 }
 
 export function EventDetailPage({ eventId }: EventDetailPageProps) {
-  const { navigateToEdit, navigateToList } = useEventNavigation();
+  const router = useRouter();
   const { data: event, isLoading, error } = useEvent(eventId);
   const { data: similarEvents, isLoading: loadingSimilar } = useSimilarEvents(eventId);
   const deleteEvent = useDeleteEvent();
@@ -22,7 +23,7 @@ export function EventDetailPage({ eventId }: EventDetailPageProps) {
   const [deleteError, setDeleteError] = useState<string | null>(null);
 
   const handleEdit = () => {
-    navigateToEdit(eventId);
+    router.push(ROUTES.DASHBOARD.EVENTS.EDIT(eventId));
   };
 
   const handleDeleteClick = () => {
@@ -33,7 +34,7 @@ export function EventDetailPage({ eventId }: EventDetailPageProps) {
   const handleConfirmDelete = async () => {
     try {
       await deleteEvent.mutateAsync(eventId);
-      navigateToList();
+      router.push(ROUTES.DASHBOARD.EVENTS.LIST);
     } catch (err) {
       setDeleteError('Failed to delete event. Please try again.');
       setShowDeleteDialog(false);
@@ -59,7 +60,7 @@ export function EventDetailPage({ eventId }: EventDetailPageProps) {
     return (
       <Container maxWidth="lg" sx={{ py: 4 }}>
         <Alert severity="error">
-          Failed to load event details. The event may not exist or you don't have permission to view it.
+          Failed to load event details. The event may not exist or you don&apos;t have permission to view it.
         </Alert>
       </Container>
     );
@@ -77,7 +78,7 @@ export function EventDetailPage({ eventId }: EventDetailPageProps) {
         event={event}
         onEdit={handleEdit}
         onDelete={handleDeleteClick}
-        onBack={navigateToList}
+        onBack={() => router.push(ROUTES.DASHBOARD.EVENTS.LIST)}
         showActions
       />
 
@@ -87,7 +88,7 @@ export function EventDetailPage({ eventId }: EventDetailPageProps) {
           <SimilarEvents
             events={similarEvents || []}
             loading={loadingSimilar}
-            onViewEvent={(id) => window.location.href = `/dashboard/events/${id}`}
+            onViewEvent={(id) => router.push(ROUTES.DASHBOARD.EVENTS.DETAIL(id))}
           />
         </>
       )}

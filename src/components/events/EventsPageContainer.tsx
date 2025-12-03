@@ -1,30 +1,29 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import { useSearchParams, usePathname } from 'next/navigation';
+import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { Container, Box, Typography, Button, Alert } from '@mui/material';
 import { Add as AddIcon } from '@mui/icons-material';
 import { EventFilters } from '@/components/events/EventFilters';
 import { EventList } from '@/components/events/EventList';
 import { ConfirmationDialog } from '@/components/common/ConfirmationDialog';
 import { useEvents, useDeleteEvent } from '@/hooks/api/useEvents';
-import { useEventNavigation } from '@/hooks/useEventNavigation';
 import { EventFilters as EventFiltersType, EventListParams } from '@/types';
 import { parseEventFilters, updateQueryParams } from '@/lib/utils/queryParams';
-import { EVENT_CONSTANTS } from '@/lib/constants/events';
+import { ROUTES } from '@/lib/constants/routes';
 
 export function EventsPageContainer() {
+  const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const { navigateToEvent, navigateToEdit, navigateToCreate } = useEventNavigation();
   const deleteEvent = useDeleteEvent();
 
   const [filters, setFilters] = useState<EventListParams>(() => {
     const parsed = parseEventFilters(searchParams);
     return {
       ...parsed,
-      pageNumber: parsed.pageNumber || EVENT_CONSTANTS.PAGINATION.DEFAULT_PAGE_NUMBER,
-      pageSize: parsed.pageSize || EVENT_CONSTANTS.PAGINATION.DEFAULT_PAGE_SIZE,
+      pageNumber: parsed.pageNumber || 1,
+      pageSize: parsed.pageSize || 12,
     };
   });
 
@@ -47,7 +46,7 @@ export function EventsPageContainer() {
       updateFiltersAndUrl({
         ...filters,
         ...newFilters,
-        pageNumber: EVENT_CONSTANTS.PAGINATION.DEFAULT_PAGE_NUMBER,
+        pageNumber: 1,
       });
     },
     [filters, updateFiltersAndUrl]
@@ -55,7 +54,7 @@ export function EventsPageContainer() {
 
   const handleClearFilters = useCallback(() => {
     updateFiltersAndUrl({
-      pageNumber: EVENT_CONSTANTS.PAGINATION.DEFAULT_PAGE_NUMBER,
+      pageNumber: 1,
       pageSize: filters.pageSize,
     });
   }, [filters.pageSize, updateFiltersAndUrl]);
@@ -103,7 +102,7 @@ export function EventsPageContainer() {
         <Button
           variant="contained"
           startIcon={<AddIcon />}
-          onClick={navigateToCreate}
+          onClick={() => router.push(ROUTES.DASHBOARD.EVENTS.CREATE)}
           size="large"
         >
           Add Event
@@ -131,11 +130,11 @@ export function EventsPageContainer() {
       <EventList
         events={data?.content || []}
         loading={isLoading}
-        currentPage={filters.pageNumber || EVENT_CONSTANTS.PAGINATION.DEFAULT_PAGE_NUMBER}
+        currentPage={filters.pageNumber || 1}
         totalPages={data?.totalPages || 1}
         onPageChange={handlePageChange}
-        onViewEvent={navigateToEvent}
-        onEditEvent={navigateToEdit}
+        onViewEvent={(id) => router.push(ROUTES.DASHBOARD.EVENTS.DETAIL(id))}
+        onEditEvent={(id) => router.push(ROUTES.DASHBOARD.EVENTS.EDIT(id))}
         onDeleteEvent={handleDeleteEvent}
       />
 

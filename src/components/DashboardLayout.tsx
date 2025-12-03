@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, AppBar, Toolbar, Typography, Button, Container, Menu, MenuItem, IconButton } from '@mui/material';
+import { Box, AppBar, Toolbar, Typography, Container, Menu, MenuItem, IconButton } from '@mui/material';
 import { useAuth } from '@/hooks';
 import { useLogout } from '@/hooks/api';
 import Link from 'next/link';

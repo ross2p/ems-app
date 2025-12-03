@@ -60,8 +60,9 @@ export function EventDetail({
         userId: user.id,
         eventId: event.id,
       });
-    } catch (err: any) {
-      setError(err.response?.data?.message || 'Не вдалося приєднатися до події');
+    } catch (err) {
+      const error = err as any;
+      setError(error.response?.data?.message || 'Не вдалося приєднатися до події');
     }
   };
   
@@ -72,8 +73,9 @@ export function EventDetail({
     try {
       setError(null);
       await deleteAttendance.mutateAsync(userAttendance.id);
-    } catch (err: any) {
-      setError(err.response?.data?.message || 'Не вдалося відписатися від події');
+    } catch (err) {
+      const error = err as any;
+      setError(error.response?.data?.message || 'Не вдалося відписатися від події');
     }
   };
   

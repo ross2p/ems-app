@@ -5,8 +5,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useLogin } from '@/hooks/api';
 import { loginSchema, type LoginFormData } from '@/lib/validation';
-import { EmailField } from '@/components/forms/EmailField';
-import { PasswordField } from '@/components/forms/PasswordField';
+import { FormField } from '@/components/forms/FormField';
 import { ErrorMessage } from '@/components/common/ErrorMessage';
 import Link from 'next/link';
 
@@ -41,16 +40,24 @@ export function LoginForm() {
       )}
 
       <Box sx={{ marginBottom: 2 }}>
-        <EmailField 
+        <FormField 
           name="email" 
           control={control}
+          label="Email"
+          type="email"
+          placeholder="you@example.com"
+          autoComplete="email"
+          inputProps={{ maxLength: 100 }}
         />
       </Box>
 
       <Box sx={{ marginBottom: 3 }}>
-        <PasswordField 
+        <FormField 
           name="password" 
           control={control}
+          label="Password"
+          type="password"
+          autoComplete="current-password"
         />
       </Box>
 
@@ -85,7 +92,7 @@ export function LoginForm() {
 
       <Box sx={{ marginTop: 2, textAlign: 'center' }}>
         <Typography variant="body2" color="textSecondary">
-          Don't have an account?{' '}
+          Don&apos;t have an account?{' '}
           <Link href="/auth/register" style={{ color: '#1976d2', textDecoration: 'none' }}>
             Sign up
           </Link>

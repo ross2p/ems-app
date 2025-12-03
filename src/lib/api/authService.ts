@@ -1,5 +1,4 @@
 import { apiClient } from './client';
-import { API_ROUTES } from '../config';
 import type {
   LoginRequest,
   RegisterRequest,
@@ -11,7 +10,7 @@ import type {
 export const authService = {
   login: async (data: LoginRequest): Promise<AuthResponse> => {
     const response = await apiClient.post<GlobalResponse<AuthResponse>>(
-      API_ROUTES.AUTH.LOGIN,
+      '/auth/login',
       data,
     );
     
@@ -24,7 +23,7 @@ export const authService = {
 
   register: async (data: RegisterRequest): Promise<AuthResponse> => {
     const response = await apiClient.post<GlobalResponse<AuthResponse>>(
-      API_ROUTES.AUTH.REGISTER,
+      '/auth/register',
       data,
     );
     
@@ -37,7 +36,7 @@ export const authService = {
 
   refreshToken: async (refreshToken: string): Promise<{ accessToken: string }> => {
     const response = await apiClient.post<GlobalResponse<{ accessToken: string }>>(
-      API_ROUTES.AUTH.REFRESH,
+      '/auth/refresh',
       { refreshToken },
     );
     
@@ -49,7 +48,7 @@ export const authService = {
   },
 
   getMe: async (): Promise<User> => {
-    const response = await apiClient.get<GlobalResponse<User>>(API_ROUTES.USER.ME);
+    const response = await apiClient.get<GlobalResponse<User>>('/user/me');
     
     if (!response.data.data) {
       throw new Error('No user data in response');
@@ -60,7 +59,7 @@ export const authService = {
 
   logout: async (): Promise<void> => {
     try {
-      await apiClient.post(API_ROUTES.AUTH.LOGOUT);
+      await apiClient.post('/auth/logout');
     } catch (error) {
       console.warn('[Auth] Logout error:', error);
     }

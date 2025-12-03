@@ -1,12 +1,5 @@
-/**
- * Utility functions for working with URL query parameters
- */
-
 import { EventListParams } from '@/types';
 
-/**
- * Parse event filters from URL search params
- */
 export function parseEventFilters(searchParams: URLSearchParams): EventListParams {
   const filters: EventListParams = {};
 

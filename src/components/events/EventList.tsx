@@ -9,7 +9,6 @@ import { Box, Typography, Pagination, Skeleton } from '@mui/material';
 import { EventOutlined } from '@mui/icons-material';
 import { Event } from '@/types';
 import { EventCard } from './EventCard';
-import { EVENT_CONSTANTS } from '@/lib/constants/events';
 
 interface EventListProps {
   events: Event[];
@@ -50,11 +49,11 @@ export function EventList({
           gap: 3,
         }}
       >
-        {[...Array(EVENT_CONSTANTS.DISPLAY.SKELETON_COUNT)].map((_, index) => (
+        {[...Array(6)].map((_, index) => (
           <Skeleton
             key={index}
             variant="rectangular"
-            height={EVENT_CONSTANTS.DISPLAY.CARD_MIN_HEIGHT}
+            height={300}
             sx={{ borderRadius: 2 }}
           />
         ))}

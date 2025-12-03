@@ -1,11 +1,10 @@
 import { apiClient } from './client';
-import { API_ROUTES } from '../config';
 import type { User, GlobalResponse } from '@/types';
 
 export const userService = {
   getProfile: async (id: string): Promise<User> => {
     const response = await apiClient.get<GlobalResponse<User>>(
-      API_ROUTES.USER.PROFILE(id),
+      `/user/${id}`,
     );
     
     if (!response.data.data) {
@@ -17,7 +16,7 @@ export const userService = {
 
   updateProfile: async (data: Partial<User>): Promise<User> => {
     const response = await apiClient.put<GlobalResponse<User>>(
-      API_ROUTES.USER.UPDATE,
+      '/user/update',
       data,
     );
     
@@ -29,6 +28,6 @@ export const userService = {
   },
 
   deleteAccount: async (id: string): Promise<void> => {
-    await apiClient.delete(API_ROUTES.USER.DELETE(id));
+    await apiClient.delete(`/user/${id}`);
   },
 };

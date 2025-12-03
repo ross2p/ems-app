@@ -1,19 +1,20 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Container, Box, Alert, CircularProgress } from '@mui/material';
 import { EventForm } from '@/components/events/EventForm';
 import { useEvent, useUpdateEvent } from '@/hooks/api/useEvents';
-import { useEventNavigation } from '@/hooks/useEventNavigation';
 import { EventFormData } from '@/lib/validation/eventValidation';
 import { getErrorMessage } from '@/lib/utils/errorHandler';
+import { ROUTES } from '@/lib/constants/routes';
 
 interface EditEventPageProps {
   eventId: string;
 }
 
 export function EditEventPage({ eventId }: EditEventPageProps) {
-  const { navigateToEvent } = useEventNavigation();
+  const router = useRouter();
   const { data: event, isLoading, error: loadError } = useEvent(eventId);
   const updateEvent = useUpdateEvent();
   const [updateError, setUpdateError] = useState<string | null>(null);
@@ -36,7 +37,7 @@ export function EditEventPage({ eventId }: EditEventPageProps) {
         },
       });
 
-      navigateToEvent(eventId);
+      router.push(ROUTES.DASHBOARD.EVENTS.DETAIL(eventId));
     } catch (err) {
       setUpdateError(getErrorMessage(err));
       console.error('Error updating event:', err);
@@ -44,7 +45,7 @@ export function EditEventPage({ eventId }: EditEventPageProps) {
   };
 
   const handleCancel = () => {
-    navigateToEvent(eventId);
+    router.push(ROUTES.DASHBOARD.EVENTS.DETAIL(eventId));
   };
 
   if (isLoading) {
@@ -61,7 +62,7 @@ export function EditEventPage({ eventId }: EditEventPageProps) {
     return (
       <Container maxWidth="md" sx={{ py: 4 }}>
         <Alert severity="error">
-          Failed to load event. The event may not exist or you don't have permission to edit it.
+          Failed to load event. The event may not exist or you don&apos;t have permission to edit it.
         </Alert>
       </Container>
     );

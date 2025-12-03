@@ -113,7 +113,7 @@ export function EventForm({
             <Controller
               name="location"
               control={control}
-              render={({ field }) => (
+              render={() => (
                 <LocationPicker
                   value={
                     location && latitude !== undefined && longitude !== undefined

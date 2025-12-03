@@ -1,7 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { attendanceService } from '@/lib/api';
 import type {
-  Attendance,
   CreateAttendanceDto,
   UpdateAttendanceDto,
   AttendanceFilterParams,

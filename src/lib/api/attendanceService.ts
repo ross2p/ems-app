@@ -1,5 +1,4 @@
 import { apiClient } from './client';
-import { API_ROUTES } from '../config';
 import type {
   Attendance,
   CreateAttendanceDto,
@@ -11,7 +10,7 @@ import type {
 export const attendanceService = {
   getAttendances: async (params: AttendanceFilterParams = {}): Promise<Attendance[]> => {
     const response = await apiClient.get<GlobalResponse<Attendance[]>>(
-      API_ROUTES.ATTENDANCE.LIST,
+      '/attendance',
       { params },
     );
 
@@ -24,7 +23,7 @@ export const attendanceService = {
 
   getAttendanceById: async (id: string): Promise<Attendance> => {
     const response = await apiClient.get<GlobalResponse<Attendance>>(
-      API_ROUTES.ATTENDANCE.GET(id),
+      `/attendance/${id}`,
     );
 
     if (!response.data.data) {
@@ -36,7 +35,7 @@ export const attendanceService = {
 
   getAttendancesByEvent: async (eventId: string): Promise<Attendance[]> => {
     const response = await apiClient.get<GlobalResponse<Attendance[]>>(
-      API_ROUTES.ATTENDANCE.BY_EVENT(eventId),
+      `/attendance/event/${eventId}`,
     );
 
     if (!response.data.data) {
@@ -48,7 +47,7 @@ export const attendanceService = {
 
   getAttendancesByUser: async (userId: string): Promise<Attendance[]> => {
     const response = await apiClient.get<GlobalResponse<Attendance[]>>(
-      API_ROUTES.ATTENDANCE.BY_USER(userId),
+      `/attendance/user/${userId}`,
     );
 
     if (!response.data.data) {
@@ -60,7 +59,7 @@ export const attendanceService = {
 
   createAttendance: async (data: CreateAttendanceDto): Promise<Attendance> => {
     const response = await apiClient.post<GlobalResponse<Attendance>>(
-      API_ROUTES.ATTENDANCE.CREATE,
+      '/attendance',
       data,
     );
 
@@ -73,7 +72,7 @@ export const attendanceService = {
 
   updateAttendance: async (id: string, data: UpdateAttendanceDto): Promise<Attendance> => {
     const response = await apiClient.patch<GlobalResponse<Attendance>>(
-      API_ROUTES.ATTENDANCE.UPDATE(id),
+      `/attendance/${id}`,
       data,
     );
 
@@ -85,7 +84,7 @@ export const attendanceService = {
   },
 
   deleteAttendance: async (id: string): Promise<void> => {
-    await apiClient.delete(API_ROUTES.ATTENDANCE.DELETE(id));
+    await apiClient.delete(`/attendance/${id}`);
   },
 };
 

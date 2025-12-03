@@ -11,7 +11,7 @@ import { MyLocation } from '@mui/icons-material';
 import { GoogleMap, Marker, Autocomplete } from '@react-google-maps/api';
 import { MAPS_CONFIG } from '@/lib/config';
 import { MapWrapper } from './MapWrapper';
-import { formatCoordinates } from '@/lib/utils/dateFormatter';
+import { formatCoordinates } from '@/lib/utils/coordinates';
 import { reverseGeocode, getCurrentLocationAddress } from '@/lib/utils/geocoding';
 
 const mapContainerStyle = {

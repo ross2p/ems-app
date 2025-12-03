@@ -3,7 +3,7 @@
 import { Box, Typography, Paper } from '@mui/material';
 import { GoogleMap, Marker } from '@react-google-maps/api';
 import { MapWrapper } from './MapWrapper';
-import { formatCoordinates } from '@/lib/utils/dateFormatter';
+import { formatCoordinates } from '@/lib/utils/coordinates';
 
 const mapContainerStyle = {
   width: '100%',

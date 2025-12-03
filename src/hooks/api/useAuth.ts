@@ -2,7 +2,6 @@
 
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { useCallback } from 'react';
 import { authService } from '@/lib/api';
 import { useAuth } from '../useAuth';
 import type { LoginRequest, RegisterRequest, AuthResponse } from '@/types';

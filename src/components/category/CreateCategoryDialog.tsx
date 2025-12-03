@@ -47,7 +47,7 @@ export function CreateCategoryDialog({
       }
 
       handleClose();
-    } catch (err) {
+    } catch {
       setError('Failed to create category. Please try again.');
     }
   };

@@ -16,7 +16,6 @@ import {
 } from '@mui/icons-material';
 import { Event } from '@/types';
 import { formatEventDate } from '@/lib/utils/dateFormatter';
-import { EVENT_CONSTANTS } from '@/lib/constants/events';
 
 interface EventCardProps {
   event: Event;
@@ -68,7 +67,7 @@ export function EventCard({
             overflow: 'hidden',
             textOverflow: 'ellipsis',
             display: '-webkit-box',
-            WebkitLineClamp: EVENT_CONSTANTS.DISPLAY.TITLE_PREVIEW_LINES,
+            WebkitLineClamp: 2,
             WebkitBoxOrient: 'vertical',
           }}
         >
@@ -104,7 +103,7 @@ export function EventCard({
             overflow: 'hidden',
             textOverflow: 'ellipsis',
             display: '-webkit-box',
-            WebkitLineClamp: EVENT_CONSTANTS.DISPLAY.DESCRIPTION_PREVIEW_LINES,
+            WebkitLineClamp: 3,
             WebkitBoxOrient: 'vertical',
           }}
         >
