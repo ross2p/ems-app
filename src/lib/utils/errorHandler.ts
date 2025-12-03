@@ -35,9 +35,6 @@ export function normalizeError(error: unknown): AppError {
   };
 }
 
-/**
- * Extract user-friendly error message from any error type
- */
 export function getErrorMessage(error: unknown): string {
   const normalized = normalizeError(error);
   return getUserFriendlyErrorMessage(normalized);

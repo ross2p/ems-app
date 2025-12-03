@@ -1,8 +1,3 @@
-/**
- * DateTime Field Component
- * Reusable datetime-local input field with React Hook Form Controller
- */
-
 import { TextField } from '@mui/material';
 import { Controller, Control, FieldValues, Path } from 'react-hook-form';
 import { toDateTimeLocalString, fromDateTimeLocalString } from '@/lib/utils/dateFormatter';
@@ -16,10 +11,6 @@ interface DateTimeFieldProps<T extends FieldValues> {
   disabled?: boolean;
 }
 
-/**
- * Datetime field with automatic Date <-> string conversion
- * Handles the complexity of datetime-local inputs
- */
 export function DateTimeField<T extends FieldValues>({
   name,
   control,

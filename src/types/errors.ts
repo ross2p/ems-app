@@ -14,14 +14,5 @@ export interface AppError {
 }
 
 
-export interface ErrorState {
-  hasError: boolean;
-  error: AppError | null;
-}
 
-export interface FieldError {
-  field: string;
-  message: string;
-}
 
-export type FormErrors = Record<string, string>;

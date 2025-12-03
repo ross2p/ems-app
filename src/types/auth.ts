@@ -1,4 +1,3 @@
-import { GlobalResponse } from './api';
 
 export interface User {
   id: string;
@@ -27,15 +26,4 @@ export interface AuthResponse {
   refreshToken: string;
 }
 
-export interface RefreshTokenRequest {
-  refreshToken: string;
-}
 
-export interface TokenResponse {
-  accessToken: string;
-}
-
-export type LoginResponse = GlobalResponse<AuthResponse>;
-export type RegisterResponse = GlobalResponse<AuthResponse>;
-export type RefreshTokenResponse = GlobalResponse<TokenResponse>;
-export type UserResponse = GlobalResponse<User>;

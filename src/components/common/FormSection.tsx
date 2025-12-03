@@ -1,8 +1,3 @@
-/**
- * Form Section Component
- * Wrapper for form sections with consistent spacing and optional headers
- */
-
 import { Box, Typography, Divider } from '@mui/material';
 import { ReactNode } from 'react';
 
@@ -13,9 +8,6 @@ interface FormSectionProps {
   showDivider?: boolean;
 }
 
-/**
- * Provides consistent spacing and structure for form sections
- */
 export function FormSection({
   title,
   subtitle,

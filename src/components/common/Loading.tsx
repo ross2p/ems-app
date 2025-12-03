@@ -2,16 +2,9 @@
 
 import { Box, CircularProgress, Typography } from '@mui/material';
 
-/**
- * Loading spinner component
- * Can be displayed inline or as full-screen overlay
- */
 interface LoadingProps {
-  /** Loading message to display below spinner */
   message?: string;
-  /** If true, renders as full-screen overlay */
   fullScreen?: boolean;
-  /** Size of the spinner */
   size?: number | string;
 }
 

@@ -1,12 +1,5 @@
-/**
- * Event-related types and interfaces
- */
-
 import { UserProfile } from './user';
 
-/**
- * Category model
- */
 export interface Category {
   id: string;
   name: string;
@@ -16,9 +9,6 @@ export interface Category {
   createdById: string;
 }
 
-/**
- * Event model - matches backend response
- */
 export interface Event {
   id: string;
   title: string;
@@ -36,9 +26,6 @@ export interface Event {
   createdBy?: UserProfile;
 }
 
-/**
- * Event filters for searching and filtering
- */
 export interface EventFilters {
   search?: string;
   categoryId?: string;
@@ -48,17 +35,12 @@ export interface EventFilters {
   sortOrder?: 'asc' | 'desc';
 }
 
-/**
- * Event list parameters with pagination
- */
 export interface EventListParams extends EventFilters {
   pageNumber?: number;
   pageSize?: number;
 }
 
-/**
- * Create event DTO
- */
+
 export interface CreateEventDto {
   title: string;
   description: string;
@@ -70,9 +52,6 @@ export interface CreateEventDto {
   categoryId?: string;
 }
 
-/**
- * Update event DTO - all fields optional
- */
 export interface UpdateEventDto {
   title?: string;
   description?: string;

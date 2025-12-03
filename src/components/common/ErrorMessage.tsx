@@ -2,10 +2,6 @@
 
 import { Box, Alert, AlertTitle, AlertProps } from '@mui/material';
 
-/**
- * Error/Alert message component
- * Displays contextual messages with appropriate severity levels
- */
 interface ErrorMessageProps extends Omit<AlertProps, 'children'> {
   message: string;
   title?: string;
