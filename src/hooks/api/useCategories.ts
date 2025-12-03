@@ -1,13 +1,6 @@
-/**
- * React Query hooks for Category operations
- */
-
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { categoryService, CreateCategoryDto, CategoryListParams } from '@/lib/api/categoryService';
 
-/**
- * Query keys for categories
- */
 export const categoryKeys = {
   all: ['categories'] as const,
   lists: () => [...categoryKeys.all, 'list'] as const,
@@ -16,9 +9,6 @@ export const categoryKeys = {
   detail: (id: string) => [...categoryKeys.details(), id] as const,
 };
 
-/**
- * Hook to fetch categories with optional search
- */
 export function useCategories(params?: CategoryListParams) {
   return useQuery({
     queryKey: categoryKeys.list(params || {}),
@@ -27,9 +17,6 @@ export function useCategories(params?: CategoryListParams) {
   });
 }
 
-/**
- * Hook to fetch single category by ID
- */
 export function useCategory(id: string) {
   return useQuery({
     queryKey: categoryKeys.detail(id),
@@ -38,16 +25,12 @@ export function useCategory(id: string) {
   });
 }
 
-/**
- * Hook to create new category
- */
 export function useCreateCategory() {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: (data: CreateCategoryDto) => categoryService.createCategory(data),
     onSuccess: () => {
-      // Invalidate categories list to refetch
       queryClient.invalidateQueries({ queryKey: categoryKeys.lists() });
     },
   });

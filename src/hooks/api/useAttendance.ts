@@ -1,7 +1,3 @@
-/**
- * React Query hooks for Attendance operations
- */
-
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { attendanceService } from '@/lib/api';
 import type {
@@ -11,9 +7,6 @@ import type {
   AttendanceFilterParams,
 } from '@/types';
 
-/**
- * Query keys for attendance
- */
 export const attendanceKeys = {
   all: ['attendances'] as const,
   lists: () => [...attendanceKeys.all, 'list'] as const,
@@ -24,9 +17,6 @@ export const attendanceKeys = {
   byUser: (userId: string) => [...attendanceKeys.all, 'user', userId] as const,
 };
 
-/**
- * Hook to fetch attendance records with optional filtering
- */
 export function useAttendances(params: AttendanceFilterParams = {}) {
   return useQuery({
     queryKey: attendanceKeys.list(params),
@@ -35,9 +25,6 @@ export function useAttendances(params: AttendanceFilterParams = {}) {
   });
 }
 
-/**
- * Hook to fetch single attendance by ID
- */
 export function useAttendance(id: string) {
   return useQuery({
     queryKey: attendanceKeys.detail(id),
@@ -46,9 +33,6 @@ export function useAttendance(id: string) {
   });
 }
 
-/**
- * Hook to fetch attendances for a specific event
- */
 export function useEventAttendances(eventId: string) {
   return useQuery({
     queryKey: attendanceKeys.byEvent(eventId),
@@ -57,9 +41,6 @@ export function useEventAttendances(eventId: string) {
   });
 }
 
-/**
- * Hook to fetch attendances for a specific user
- */
 export function useUserAttendances(userId: string) {
   return useQuery({
     queryKey: attendanceKeys.byUser(userId),
@@ -68,9 +49,6 @@ export function useUserAttendances(userId: string) {
   });
 }
 
-/**
- * Hook to create new attendance (join event)
- */
 export function useCreateAttendance() {
   const queryClient = useQueryClient();
 
@@ -86,9 +64,6 @@ export function useCreateAttendance() {
   });
 }
 
-/**
- * Hook to update attendance
- */
 export function useUpdateAttendance() {
   const queryClient = useQueryClient();
 
@@ -105,9 +80,6 @@ export function useUpdateAttendance() {
   });
 }
 
-/**
- * Hook to delete attendance (leave event)
- */
 export function useDeleteAttendance() {
   const queryClient = useQueryClient();
 

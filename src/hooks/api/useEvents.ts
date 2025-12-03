@@ -1,7 +1,3 @@
-/**
- * React Query hooks for Event operations
- */
-
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { eventService } from '@/lib/api';
 import type {
@@ -11,9 +7,6 @@ import type {
   EventListParams,
 } from '@/types';
 
-/**
- * Query keys for events
- */
 export const eventKeys = {
   all: ['events'] as const,
   lists: () => [...eventKeys.all, 'list'] as const,
@@ -31,9 +24,6 @@ export function useEvents(params: EventListParams = {}) {
   });
 }
 
-/**
- * Hook to fetch single event by ID
- */
 export function useEvent(id: string) {
   return useQuery({
     queryKey: eventKeys.detail(id),
@@ -50,9 +40,6 @@ export function useSimilarEvents(id: string) {
   });
 }
 
-/**
- * Hook to create new event
- */
 export function useCreateEvent() {
   const queryClient = useQueryClient();
 
@@ -65,9 +52,6 @@ export function useCreateEvent() {
   });
 }
 
-/**
- * Hook to update existing event
- */
 export function useUpdateEvent() {
   const queryClient = useQueryClient();
 
@@ -82,9 +66,6 @@ export function useUpdateEvent() {
   });
 }
 
-/**
- * Hook to delete event
- */
 export function useDeleteEvent() {
   const queryClient = useQueryClient();
 

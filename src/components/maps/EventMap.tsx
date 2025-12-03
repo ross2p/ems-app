@@ -1,13 +1,7 @@
-/**
- * Event Map Component
- * Read-only map display for event location
- */
-
 'use client';
 
 import { Box, Typography, Paper } from '@mui/material';
 import { GoogleMap, Marker } from '@react-google-maps/api';
-import { MAPS_CONFIG } from '@/lib/config';
 import { MapWrapper } from './MapWrapper';
 import { formatCoordinates } from '@/lib/utils/dateFormatter';
 

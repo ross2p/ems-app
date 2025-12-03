@@ -20,10 +20,8 @@ export function useLoginMutation() {
       return authService.login(data);
     },
     onSuccess: (data) => {
-      // Update auth context
       setUser(data.user);
       setTokens(data.accessToken, data.refreshToken);
-      // Redirect to dashboard
       router.push('/dashboard');
     },
     onError: (error: AxiosError<ApiErrorResponse>) => {
@@ -33,9 +31,6 @@ export function useLoginMutation() {
   });
 }
 
-/**
- * Register mutation hook
- */
 export function useRegisterMutation() {
   const router = useRouter();
   const authContext = useAuth();
@@ -59,9 +54,6 @@ export function useRegisterMutation() {
   });
 }
 
-/**
- * Logout mutation hook
- */
 export function useLogoutMutation() {
   const router = useRouter();
   const authContext = useAuth();
@@ -82,9 +74,6 @@ export function useLogoutMutation() {
   });
 }
 
-/**
- * Convenience aliases
- */
 export const useLogin = useLoginMutation;
 export const useRegister = useRegisterMutation;
 export const useLogout = useLogoutMutation;

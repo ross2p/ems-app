@@ -1,8 +1,3 @@
-/**
- * Secure Token Storage with SSR-safe guards
- * Uses localStorage with proper error handling and validation
- */
-
 import { STORAGE_KEYS } from '../config';
 
 class TokenStorageService {

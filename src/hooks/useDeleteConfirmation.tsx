@@ -1,7 +1,3 @@
-/**
- * Delete Confirmation Hook
- * Manages confirmation dialog state for delete operations
- */
 
 import { useState, useCallback } from 'react';
 
@@ -11,10 +7,6 @@ interface UseDeleteConfirmationOptions {
   message?: string;
 }
 
-/**
- * Hook for handling delete confirmations
- * Returns dialog state and control functions
- */
 export function useDeleteConfirmation({
   onConfirm,
   title = 'Confirm Delete',
@@ -22,23 +14,14 @@ export function useDeleteConfirmation({
 }: UseDeleteConfirmationOptions) {
   const [isOpen, setIsOpen] = useState(false);
 
-  /**
-   * Open confirmation dialog
-   */
   const openDialog = useCallback(() => {
     setIsOpen(true);
   }, []);
 
-  /**
-   * Close confirmation dialog
-   */
   const closeDialog = useCallback(() => {
     setIsOpen(false);
   }, []);
 
-  /**
-   * Handle confirmation
-   */
   const handleConfirm = useCallback(async () => {
     await onConfirm();
     closeDialog();

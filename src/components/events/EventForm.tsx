@@ -7,7 +7,7 @@ import { Save as SaveIcon, Cancel as CancelIcon } from '@mui/icons-material';
 import { eventFormSchema, EventFormData } from '@/lib/validation/eventValidation';
 import { LocationPicker } from '@/components/maps/LocationPicker';
 import { FormField } from '@/components/forms/FormField';
-import { CategorySelector } from '@/components/forms/CategorySelector';
+import { CategorySelector } from '@/components/category/CategorySelector';
 import { DateTimeField } from '@/components/forms/DateTimeField';
 import { FormSection } from '@/components/common/FormSection';
 import { Event } from '@/types';

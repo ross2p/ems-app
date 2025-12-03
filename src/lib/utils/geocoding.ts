@@ -1,22 +1,7 @@
-/**
- * Geocoding Utilities
- * Helper functions for working with Google Maps Geocoding API
- */
-
-/**
- * Location coordinates
- */
 export interface Coordinates {
   lat: number;
   lng: number;
 }
-
-/**
- * Reverse geocode coordinates to address
- * Converts latitude/longitude to a human-readable address
- * @param coordinates - Latitude and longitude
- * @returns Promise with formatted address or null if failed
- */
 export async function reverseGeocode(
   coordinates: Coordinates
 ): Promise<string | null> {
@@ -38,10 +23,6 @@ export async function reverseGeocode(
   }
 }
 
-/**
- * Get current user location from browser
- * @returns Promise with coordinates or null if denied/failed
- */
 export async function getCurrentPosition(): Promise<Coordinates | null> {
   if (!navigator.geolocation) {
     return null;
@@ -63,10 +44,6 @@ export async function getCurrentPosition(): Promise<Coordinates | null> {
   });
 }
 
-/**
- * Get address from coordinates (combines getCurrentPosition + reverseGeocode)
- * @returns Promise with address or null
- */
 export async function getCurrentLocationAddress(): Promise<{
   coordinates: Coordinates;
   address: string;
