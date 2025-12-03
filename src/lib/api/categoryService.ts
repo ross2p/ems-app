@@ -1,23 +1,11 @@
-/**
- * Category API Service
- * Handles all category-related API calls
- */
-
 import { apiClient } from './client';
 import { API_ROUTES } from '../config';
 import type { Category, GlobalResponse, PageResponse } from '@/types';
 
-/**
- * DTO for creating a new category
- */
 export interface CreateCategoryDto {
   name: string;
   description?: string;
 }
-
-/**
- * Category list parameters
- */
 export interface CategoryListParams {
   search?: string;
   pageNumber?: number;
@@ -25,9 +13,6 @@ export interface CategoryListParams {
 }
 
 export const categoryService = {
-  /**
-   * Get all categories with optional search
-   */
   getCategories: async (params?: CategoryListParams): Promise<PageResponse<Category>> => {
     const response = await apiClient.get<GlobalResponse<PageResponse<Category>>>(
       API_ROUTES.CATEGORY.LIST,
@@ -41,9 +26,6 @@ export const categoryService = {
     return response.data.data;
   },
 
-  /**
-   * Get single category by ID
-   */
   getCategoryById: async (id: string): Promise<Category> => {
     const response = await apiClient.get<GlobalResponse<Category>>(
       API_ROUTES.CATEGORY.GET(id),
@@ -56,9 +38,6 @@ export const categoryService = {
     return response.data.data;
   },
 
-  /**
-   * Create a new category
-   */
   createCategory: async (data: CreateCategoryDto): Promise<Category> => {
     const response = await apiClient.post<GlobalResponse<Category>>(
       API_ROUTES.CATEGORY.CREATE,

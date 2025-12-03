@@ -3,6 +3,16 @@ import { API_CONFIG, HTTP_STATUS } from '../config';
 import { tokenStorage } from '../storage';
 import type { GlobalResponse, ApiErrorResponse } from '@/types';
 
+let authServiceImported: any = null;
+
+const getAuthService = async () => {
+  if (!authServiceImported) {
+    const module = await import('./authService');
+    authServiceImported = module.authService;
+  }
+  return authServiceImported;
+};
+
 const createAxiosClient = (baseUrl: string): AxiosInstance => {
   const client = axios.create({
     baseURL: baseUrl,
@@ -43,19 +53,12 @@ const createAxiosClient = (baseUrl: string): AxiosInstance => {
             throw new Error('No refresh token available');
           }
 
-          const response = await axios.post<GlobalResponse<{ accessToken: string }>>(
-            `${API_CONFIG.BASE_URL}/auth/refresh`,
-            { refreshToken },
-          );
+          const authService = await getAuthService();
+          const response = await authService.refreshToken(refreshToken);
 
-          const newAccessToken = response.data.data?.accessToken;
-          if (!newAccessToken) {
-            throw new Error('No access token in refresh response');
-          }
-
-          tokenStorage.setAccessToken(newAccessToken);
+          tokenStorage.setAccessToken(response.accessToken);
           if (originalRequest.headers) {
-            originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+            originalRequest.headers.Authorization = `Bearer ${response.accessToken}`;
           }
           return client(originalRequest);
         } catch (refreshError) {
@@ -72,5 +75,5 @@ const createAxiosClient = (baseUrl: string): AxiosInstance => {
   return client;
 };
 
-export const apiClient = createAxiosClient( API_CONFIG.BASE_URL);
+export const apiClient = createAxiosClient(API_CONFIG.BASE_URL);
 

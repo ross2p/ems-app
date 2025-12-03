@@ -1,8 +1,3 @@
-/**
- * Event API Service
- * Handles all event-related API calls
- */
-
 import { apiClient } from './client';
 import { API_ROUTES } from '../config';
 import type {

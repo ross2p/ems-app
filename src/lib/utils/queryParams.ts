@@ -56,9 +56,6 @@ export function parseEventFilters(searchParams: URLSearchParams): EventListParam
   return filters;
 }
 
-/**
- * Build query string from event filters
- */
 export function buildEventFiltersQuery(filters: EventListParams): string {
   const params = new URLSearchParams();
 
@@ -74,9 +71,6 @@ export function buildEventFiltersQuery(filters: EventListParams): string {
   return params.toString();
 }
 
-/**
- * Update URL query parameters without page reload
- */
 export function updateQueryParams(
   pathname: string,
   filters: EventListParams,
