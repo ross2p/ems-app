@@ -7,19 +7,13 @@ export const ENV = {
   isProd: process.env.NODE_ENV === 'production',
 } as const;
 
-/**
- * API Configuration
- */
 export const API_CONFIG = {
   BASE_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api/v1',
-  TIMEOUT: 30000, // 30 seconds
+  TIMEOUT: 30000,
   RETRY_ATTEMPTS: 3,
-  RETRY_DELAY: 1000, // 1 second
+  RETRY_DELAY: 1000,
 } as const;
 
-/**
- * API Routes (versioned with /api/v1 prefix)
- */
 export const API_ROUTES = {
   // Auth
   AUTH: {
@@ -68,18 +62,12 @@ export const API_ROUTES = {
   },
 } as const;
 
-/**
- * Local Storage Keys (prefixed with ems_ to avoid conflicts)
- */
 export const STORAGE_KEYS = {
   ACCESS_TOKEN: 'ems_access_token',
   REFRESH_TOKEN: 'ems_refresh_token',
   USER: 'ems_user',
 } as const;
 
-/**
- * HTTP Status Codes
- */
 export const HTTP_STATUS = {
   OK: 200,
   CREATED: 201,
@@ -92,20 +80,14 @@ export const HTTP_STATUS = {
   SERVICE_UNAVAILABLE: 503,
 } as const;
 
-/**
- * Auth-related constants
- */
 export const AUTH = {
   PASSWORD_MIN_LENGTH: 6,
   PASSWORD_MAX_LENGTH: 50,
   NAME_MIN_LENGTH: 2,
   NAME_MAX_LENGTH: 50,
-  TOKEN_REFRESH_THRESHOLD: 5 * 60 * 1000, // 5 minutes before expiry
 } as const;
 
-/**
- * Google Maps Configuration
- */
+
 export const MAPS_CONFIG = {
   API_KEY: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '',
   DEFAULT_CENTER: {
@@ -115,18 +97,12 @@ export const MAPS_CONFIG = {
   DEFAULT_ZOOM: 13,
 } as const;
 
-/**
- * UI/UX Constants
- */
 export const UI = {
   ANIMATION_DURATION: 300,
   TOAST_DURATION: 5000,
   DEBOUNCE_DELAY: 300,
 } as const;
 
-/**
- * Regular Expressions
- */
 export const REGEX = {
   EMAIL: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
   URL: /^https?:\/\/.+/,

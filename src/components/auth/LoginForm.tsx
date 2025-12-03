@@ -22,6 +22,7 @@ export function LoginForm() {
   });
 
   const onSubmit: SubmitHandler<LoginFormData> = (data) => {
+    console.log('Submitting login form with data:', process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY, process.env.NEXT_PUBLIC_API_URL,);
     login(data);
   };
 

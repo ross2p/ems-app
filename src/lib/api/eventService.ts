@@ -30,7 +30,6 @@ export const eventService = {
   },
 
   getEventById: async (id: string): Promise<Event> => {
-    console.log('!!!!start!!!!')
     const response = await apiClient.get<GlobalResponse<Event>>(
       API_ROUTES.EVENT.GET(id),
     );
