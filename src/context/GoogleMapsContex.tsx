@@ -1,9 +1,3 @@
-/**
- * Google Maps Provider
- * Single instance of Google Maps loader for the entire app
- * Prevents multiple loader instances and ensures consistent configuration
- */
-
 'use client';
 
 import { createContext, useContext, ReactNode } from 'react';

@@ -1,5 +1,5 @@
 import { EventsPageContainer } from '@/components/events/EventsPageContainer';
-import { ProtectedPage } from '@/components/ProtectedPage';
+import { ProtectedPage } from '@/components/common/ProtectedPage';
 
 export default function Dashboard() {
   return (

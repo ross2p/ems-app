@@ -5,9 +5,6 @@ import { tokenStorage } from '@/lib/storage';
 import { authService } from '@/lib/api';
 import type { User } from '@/types';
 
-/**
- * Auth Context Type Definition
- */
 export interface AuthContextType {
   user: User | null;
   isLoading: boolean;
@@ -20,22 +17,13 @@ export interface AuthContextType {
   clearError: () => void;
 }
 
-/**
- * Auth Context
- */
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-/**
- * Auth Provider Component
- */
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUserState] = useState<User | null>(null);
   const [isLoading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  /**
-   * Initialize auth state from storage
-   */
   useEffect(() => {
     const initializeAuth = async () => {
       try {
@@ -72,9 +60,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     initializeAuth();
   }, []);
 
-  /**
-   * Update user state and persist to storage
-   */
+
   const setUser = useCallback((user: User | null) => {
     setUserState(user);
     const success = tokenStorage.setUser(user);
@@ -83,9 +69,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  /**
-   * Set both access and refresh tokens
-   */
   const setTokens = useCallback((accessToken: string, refreshToken: string) => {
     const success = tokenStorage.setTokens(accessToken, refreshToken);
     if (!success) {
@@ -94,9 +77,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  /**
-   * Logout current user
-   */
   const logout = useCallback(async () => {
     try {
       // Try to notify server about logout
@@ -112,9 +92,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  /**
-   * Clear error message
-   */
   const clearError = useCallback(() => {
     setError(null);
   }, []);

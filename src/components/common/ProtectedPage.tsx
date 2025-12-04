@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks';
 import type { ReactNode } from 'react';
-import { Loading } from './common/Loading';
+import { Loading } from './Loading';
 
 interface ProtectedPageProps {
   children: ReactNode;

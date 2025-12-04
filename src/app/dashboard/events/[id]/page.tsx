@@ -1,5 +1,5 @@
 import { EventDetailPage } from '@/components/events/EventDetailPage';
-import { ProtectedPage } from '@/components/ProtectedPage';
+import { ProtectedPage } from '@/components/common/ProtectedPage';
 
 interface EventPageProps {
   params: Promise<{

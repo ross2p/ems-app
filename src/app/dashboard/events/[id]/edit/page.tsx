@@ -1,5 +1,5 @@
 import { EditEventPage } from '@/components/events/EditEventPage';
-import { ProtectedPage } from '@/components/ProtectedPage';
+import { ProtectedPage } from '@/components/common/ProtectedPage';
 
 interface EditEventProps {
   params: Promise<{

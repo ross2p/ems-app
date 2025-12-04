@@ -4,11 +4,8 @@ import { tokenStorage } from '../storage';
 import { authService } from './authService';
 import type { ApiErrorResponse } from '@/types';
 
-const getAuthService = async () => {
-  return authService;
-};
-
 const createAxiosClient = (baseUrl: string): AxiosInstance => {
+  console.log("baseUrl!!!", baseUrl)
   const client = axios.create({
     baseURL: baseUrl,
     headers: {
@@ -48,7 +45,6 @@ const createAxiosClient = (baseUrl: string): AxiosInstance => {
             throw new Error('No refresh token available');
           }
 
-          const authService = await getAuthService();
           const response = await authService.refreshToken(refreshToken);
 
           tokenStorage.setAccessToken(response.accessToken);
@@ -71,5 +67,5 @@ const createAxiosClient = (baseUrl: string): AxiosInstance => {
 };
 
 
-export const apiClient = createAxiosClient(API_CONFIG.BASE_URL);
+export const apiClient = createAxiosClient(`${API_CONFIG.BASE_URL}/api/v1`);
 
