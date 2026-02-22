@@ -1,15 +1,14 @@
-import axios, { AxiosInstance, AxiosError, AxiosRequestConfig } from 'axios';
-import { API_CONFIG } from '../config';
-import { tokenStorage } from '../storage';
-import { authService } from './authService';
-import type { ApiErrorResponse } from '@/types';
+import axios, { AxiosInstance, AxiosError, AxiosRequestConfig } from "axios";
+import { API_CONFIG } from "../config";
+import { tokenStorage } from "../storage";
+import { authService } from "./authService";
+import type { ApiErrorResponse } from "@/types";
 
 const createAxiosClient = (baseUrl: string): AxiosInstance => {
-  console.log("baseUrl!!!", baseUrl)
   const client = axios.create({
     baseURL: baseUrl,
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
   });
 
@@ -22,7 +21,7 @@ const createAxiosClient = (baseUrl: string): AxiosInstance => {
       return config;
     },
     (error: Error) => {
-      console.error('[API Request Error]', error);
+      console.error("[API Request Error]", error);
       return Promise.reject(error);
     },
   );
@@ -30,19 +29,21 @@ const createAxiosClient = (baseUrl: string): AxiosInstance => {
   client.interceptors.response.use(
     (response) => response,
     async (error: AxiosError<ApiErrorResponse>) => {
-      const originalRequest = error.config as AxiosRequestConfig & { _retry?: boolean };
+      const originalRequest = error.config as AxiosRequestConfig & {
+        _retry?: boolean;
+      };
 
       if (
         error.response?.status === 401 &&
         !originalRequest._retry &&
-        originalRequest.url?.includes('/auth/refresh') === false
+        originalRequest.url?.includes("/auth/refresh") === false
       ) {
         originalRequest._retry = true;
 
         try {
           const refreshToken = tokenStorage.getRefreshToken();
           if (!refreshToken) {
-            throw new Error('No refresh token available');
+            throw new Error("No refresh token available");
           }
 
           const response = await authService.refreshToken(refreshToken);
@@ -54,7 +55,7 @@ const createAxiosClient = (baseUrl: string): AxiosInstance => {
           return client(originalRequest);
         } catch (refreshError: unknown) {
           tokenStorage.clearAll();
-          console.error('[Auth] Token refresh failed:', refreshError);
+          console.error("[Auth] Token refresh failed:", refreshError);
           return Promise.reject(error);
         }
       }
@@ -66,6 +67,4 @@ const createAxiosClient = (baseUrl: string): AxiosInstance => {
   return client;
 };
 
-
 export const apiClient = createAxiosClient(`${API_CONFIG.BASE_URL}/api/v1`);
-

@@ -1,22 +1,20 @@
-/**
- * Location Picker Component with Google Maps
- * Allows users to search and select a location on the map
- */
+"use client";
 
-'use client';
-
-import { useState, useCallback, useRef } from 'react';
-import { Box, TextField, Typography, Paper } from '@mui/material';
-import { MyLocation } from '@mui/icons-material';
-import { GoogleMap, Marker, Autocomplete } from '@react-google-maps/api';
-import { MAPS_CONFIG } from '@/lib/config';
-import { MapWrapper } from './MapWrapper';
-import { formatCoordinates } from '@/lib/utils/coordinates';
-import { reverseGeocode, getCurrentLocationAddress } from '@/lib/utils/geocoding';
+import { useState, useCallback, useRef } from "react";
+import { Box, TextField, Typography, Paper } from "@mui/material";
+import { MyLocation } from "@mui/icons-material";
+import { GoogleMap, Marker, Autocomplete } from "@react-google-maps/api";
+import { MAPS_CONFIG } from "@/lib/config";
+import { MapWrapper } from "./MapWrapper";
+import { formatCoordinates } from "@/lib/utils/coordinates";
+import {
+  reverseGeocode,
+  getCurrentLocationAddress,
+} from "@/lib/utils/geocoding";
 
 const mapContainerStyle = {
-  width: '100%',
-  height: '400px',
+  width: "100%",
+  height: "400px",
 };
 
 interface LocationData {
@@ -31,18 +29,22 @@ interface LocationPickerProps {
   error?: string;
 }
 
-export function LocationPicker({ value, onChange, error }: LocationPickerProps) {
+export function LocationPicker({
+  value,
+  onChange,
+  error,
+}: LocationPickerProps) {
   const [center, setCenter] = useState({
     lat: value?.latitude || MAPS_CONFIG.DEFAULT_CENTER.lat,
     lng: value?.longitude || MAPS_CONFIG.DEFAULT_CENTER.lng,
   });
 
   const [markerPosition, setMarkerPosition] = useState(
-    value ? { lat: value.latitude, lng: value.longitude } : null
+    value ? { lat: value.latitude, lng: value.longitude } : null,
   );
 
   const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
-  const [address, setAddress] = useState(value?.address || '');
+  const [address, setAddress] = useState(value?.address || "");
 
   // Handle place selection from autocomplete
   const onPlaceChanged = useCallback(() => {
@@ -52,7 +54,7 @@ export function LocationPicker({ value, onChange, error }: LocationPickerProps) 
       if (place.geometry?.location) {
         const lat = place.geometry.location.lat();
         const lng = place.geometry.location.lng();
-        const formattedAddress = place.formatted_address || '';
+        const formattedAddress = place.formatted_address || "";
 
         setMarkerPosition({ lat, lng });
         setCenter({ lat, lng });
@@ -88,16 +90,16 @@ export function LocationPicker({ value, onChange, error }: LocationPickerProps) 
         }
       }
     },
-    [onChange]
+    [onChange],
   );
 
   // Get user's current location
   const getCurrentLocation = useCallback(async () => {
     const result = await getCurrentLocationAddress();
-    
+
     if (result) {
       const { coordinates, address: formattedAddress } = result;
-      
+
       setMarkerPosition(coordinates);
       setCenter(coordinates);
       setAddress(formattedAddress);
@@ -127,12 +129,14 @@ export function LocationPicker({ value, onChange, error }: LocationPickerProps) 
             value={address}
             onChange={(e) => setAddress(e.target.value)}
             error={!!error}
-            helperText={error || 'Search or click on the map to select a location'}
+            helperText={
+              error || "Search or click on the map to select a location"
+            }
             sx={{ mb: 2 }}
             InputProps={{
               endAdornment: (
                 <MyLocation
-                  sx={{ cursor: 'pointer', color: 'primary.main' }}
+                  sx={{ cursor: "pointer", color: "primary.main" }}
                   onClick={getCurrentLocation}
                   titleAccess="Use my current location"
                 />
@@ -162,13 +166,13 @@ export function LocationPicker({ value, onChange, error }: LocationPickerProps) 
           <Typography
             variant="caption"
             color="text.secondary"
-            sx={{ mt: 1, display: 'block' }}
+            sx={{ mt: 1, display: "block" }}
           >
-            Coordinates: {formatCoordinates(markerPosition.lat, markerPosition.lng)}
+            Coordinates:{" "}
+            {formatCoordinates(markerPosition.lat, markerPosition.lng)}
           </Typography>
         )}
       </Box>
     </MapWrapper>
   );
 }
-

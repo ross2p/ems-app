@@ -1,14 +1,9 @@
-'use client';
+"use client";
 
-import { Box, Typography, Paper } from '@mui/material';
-import { GoogleMap, Marker } from '@react-google-maps/api';
-import { MapWrapper } from './MapWrapper';
-import { formatCoordinates } from '@/lib/utils/coordinates';
-
-const mapContainerStyle = {
-  width: '100%',
-  height: '300px',
-};
+import { Box, Typography, Paper } from "@mui/material";
+import { GoogleMap, Marker } from "@react-google-maps/api";
+import { MapWrapper } from "./MapWrapper";
+import { formatCoordinates } from "@/lib/utils/coordinates";
 
 interface EventMapProps {
   latitude: number;
@@ -21,9 +16,12 @@ export function EventMap({ latitude, longitude, title }: EventMapProps) {
 
   return (
     <MapWrapper>
-      <Paper elevation={2} sx={{ mt: 2, overflow: 'hidden', borderRadius: 2 }}>
+      <Paper elevation={2} sx={{ mt: 2, overflow: "hidden", borderRadius: 2 }}>
         <GoogleMap
-          mapContainerStyle={mapContainerStyle}
+          mapContainerStyle={{
+            width: "100%",
+            height: "300px",
+          }}
           center={center}
           zoom={15}
           options={{
@@ -35,7 +33,7 @@ export function EventMap({ latitude, longitude, title }: EventMapProps) {
         >
           <Marker position={center} title={title} />
         </GoogleMap>
-        <Box sx={{ p: 1, bgcolor: 'background.paper' }}>
+        <Box sx={{ p: 1, bgcolor: "background.paper" }}>
           <Typography variant="caption" color="text.secondary">
             {formatCoordinates(latitude, longitude)}
           </Typography>
@@ -44,4 +42,3 @@ export function EventMap({ latitude, longitude, title }: EventMapProps) {
     </MapWrapper>
   );
 }
-

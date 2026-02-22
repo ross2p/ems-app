@@ -1,38 +1,47 @@
-'use client';
+"use client";
 
-import { Box, CircularProgress, Typography, Button } from '@mui/material';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useLogin } from '@/hooks/api';
-import { loginSchema, type LoginFormData } from '@/lib/validation';
-import { FormField } from '@/components/forms/FormField';
-import { ErrorMessage } from '@/components/common/ErrorMessage';
-import Link from 'next/link';
+import { Box, CircularProgress, Typography, Button } from "@mui/material";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useLogin } from "@/hooks/api";
+import { loginSchema, type LoginFormData } from "@/lib/validation";
+import { FormField } from "@/components/forms/FormField";
+import { ErrorMessage } from "@/components/common/ErrorMessage";
+import Link from "next/link";
 
 export function LoginForm() {
   const { mutate: login, isPending, error, isError } = useLogin();
-  const { control, handleSubmit, formState: { isValid } } = useForm<LoginFormData>({
+  const {
+    control,
+    handleSubmit,
+    formState: { isValid },
+  } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
-    mode: 'onChange',
+    mode: "onChange",
     defaultValues: {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     },
   });
 
   const onSubmit: SubmitHandler<LoginFormData> = (data) => {
-    console.log('Submitting login form with data:', process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY, process.env.NEXT_PUBLIC_API_URL,);
     login(data);
   };
 
-  const errorMessage = error?.response?.data?.message || 'An error occurred during login. Please try again.';
+  const errorMessage =
+    error?.response?.data?.message ||
+    "An error occurred during login. Please try again.";
 
   return (
-    <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ width: '100%' }}>
+    <Box
+      component="form"
+      onSubmit={handleSubmit(onSubmit)}
+      sx={{ width: "100%" }}
+    >
       {isError && (
         <Box sx={{ marginBottom: 2 }}>
-          <ErrorMessage 
-            message={errorMessage} 
+          <ErrorMessage
+            message={errorMessage}
             title="Login Error"
             severity="error"
           />
@@ -40,8 +49,8 @@ export function LoginForm() {
       )}
 
       <Box sx={{ marginBottom: 2 }}>
-        <FormField 
-          name="email" 
+        <FormField
+          name="email"
           control={control}
           label="Email"
           type="email"
@@ -52,8 +61,8 @@ export function LoginForm() {
       </Box>
 
       <Box sx={{ marginBottom: 3 }}>
-        <FormField 
-          name="password" 
+        <FormField
+          name="password"
           control={control}
           label="Password"
           type="password"
@@ -68,7 +77,7 @@ export function LoginForm() {
         size="large"
         disabled={isPending || !isValid}
         sx={{
-          position: 'relative',
+          position: "relative",
           py: 1.5,
         }}
       >
@@ -77,23 +86,26 @@ export function LoginForm() {
             <CircularProgress
               size={20}
               sx={{
-                position: 'absolute',
-                left: '50%',
-                marginLeft: '-10px',
-                color: 'white',
+                position: "absolute",
+                left: "50%",
+                marginLeft: "-10px",
+                color: "white",
               }}
             />
-            <span style={{ visibility: 'hidden' }}>Sign In</span>
+            <span style={{ visibility: "hidden" }}>Sign In</span>
           </>
         ) : (
-          'Sign In'
+          "Sign In"
         )}
       </Button>
 
-      <Box sx={{ marginTop: 2, textAlign: 'center' }}>
+      <Box sx={{ marginTop: 2, textAlign: "center" }}>
         <Typography variant="body2" color="textSecondary">
-          Don&apos;t have an account?{' '}
-          <Link href="/auth/register" style={{ color: '#1976d2', textDecoration: 'none' }}>
+          Don&apos;t have an account?{" "}
+          <Link
+            href="/auth/register"
+            style={{ color: "#1976d2", textDecoration: "none" }}
+          >
             Sign up
           </Link>
         </Typography>
