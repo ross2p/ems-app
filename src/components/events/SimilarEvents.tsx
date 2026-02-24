@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { Box, Typography, CircularProgress, Alert } from '@mui/material';
-import { Event } from '@/types';
-import { EventCard } from './EventCard';
+import { Box, Typography, CircularProgress, Alert } from "@mui/material";
+import { Event } from "@/types";
+import { EventCard } from "./EventCard";
 
 interface SimilarEventsProps {
   events: Event[];
@@ -19,7 +19,7 @@ export function SimilarEvents({
 }: SimilarEventsProps) {
   if (loading) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
+      <Box sx={{ display: "flex", justifyContent: "center", py: 4 }}>
         <CircularProgress />
       </Box>
     );
@@ -48,25 +48,19 @@ export function SimilarEvents({
       </Typography>
       <Box
         sx={{
-          display: 'grid',
+          display: "grid",
           gridTemplateColumns: {
-            xs: '1fr',
-            sm: 'repeat(2, 1fr)',
-            md: 'repeat(3, 1fr)',
+            xs: "1fr",
+            sm: "repeat(2, 1fr)",
+            md: "repeat(3, 1fr)",
           },
           gap: 3,
         }}
       >
         {events.map((event) => (
-          <EventCard
-            key={event.id}
-            event={event}
-            onView={onViewEvent}
-            showActions={false}
-          />
+          <EventCard key={event.id} event={event} onView={onViewEvent} />
         ))}
       </Box>
     </Box>
   );
 }
-

@@ -1,4 +1,4 @@
-import { apiClient } from './client';
+import { apiClient } from "./client";
 import type {
   Event,
   CreateEventDto,
@@ -6,30 +6,27 @@ import type {
   EventListParams,
   GlobalResponse,
   PageResponse,
-} from '@/types';
+} from "@/types";
 
 export const eventService = {
-  
-  getEvents: async (params: EventListParams = {}): Promise<PageResponse<Event>> => {
+  getEvents: async (params: EventListParams): Promise<PageResponse<Event>> => {
     const response = await apiClient.get<GlobalResponse<PageResponse<Event>>>(
-      '/event',
+      "/event",
       { params },
     );
 
     if (!response.data.data) {
-      throw new Error('No events data in response');
+      throw new Error("No events data in response");
     }
 
     return response.data.data;
   },
 
   getEventById: async (id: string): Promise<Event> => {
-    const response = await apiClient.get<GlobalResponse<Event>>(
-      `/event/${id}`,
-    );
+    const response = await apiClient.get<GlobalResponse<Event>>(`/event/${id}`);
 
     if (!response.data.data) {
-      throw new Error('No event data in response');
+      throw new Error("No event data in response");
     }
 
     return response.data.data;
@@ -37,11 +34,12 @@ export const eventService = {
 
   getSimilarEvents: async (id: string): Promise<Event[]> => {
     const response = await apiClient.get<GlobalResponse<Event[]>>(
-      `/event/${id}/similar`,
+      `/event/recommendation`,
+      { params: { eventId: id } },
     );
 
     if (!response.data.data) {
-      throw new Error('No similar events data in response');
+      throw new Error("No similar events data in response");
     }
 
     return response.data.data;
@@ -49,12 +47,12 @@ export const eventService = {
 
   createEvent: async (data: CreateEventDto): Promise<Event> => {
     const response = await apiClient.post<GlobalResponse<Event>>(
-      '/event',
+      "/event",
       data,
     );
 
     if (!response.data.data) {
-      throw new Error('No event data in create response');
+      throw new Error("No event data in create response");
     }
 
     return response.data.data;
@@ -67,7 +65,7 @@ export const eventService = {
     );
 
     if (!response.data.data) {
-      throw new Error('No event data in update response');
+      throw new Error("No event data in update response");
     }
 
     return response.data.data;
@@ -77,4 +75,3 @@ export const eventService = {
     await apiClient.delete(`/event/${id}`);
   },
 };
-

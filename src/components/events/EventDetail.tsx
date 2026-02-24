@@ -1,21 +1,37 @@
-/**
- * Event Detail Component
- * Displays comprehensive information about an event
- */
+"use client";
 
-'use client';
-
-import { Box, Card, CardContent, Typography, Button, Stack, Divider, Alert, CircularProgress } from '@mui/material';
-import { CalendarToday, LocationOn, ArrowBack, Description, PersonAdd, PersonRemove } from '@mui/icons-material';
-import { Event } from '@/types';
-import { formatFullDateTime } from '@/lib/utils/dateFormatter';
-import { EventMap } from '@/components/maps/EventMap';
-import { EventHeader } from './detail/EventHeader';
-import { EventInfoSection } from './detail/EventInfoSection';
-import { EventMetadata } from './detail/EventMetadata';
-import { useEventAttendances, useCreateAttendance, useDeleteAttendance } from '@/hooks/api';
-import { useAuth } from '@/hooks/useAuth';
-import { useState } from 'react';
+import {
+  Box,
+  Card,
+  CardContent,
+  Typography,
+  Button,
+  Stack,
+  Divider,
+  Alert,
+  CircularProgress,
+} from "@mui/material";
+import {
+  CalendarToday,
+  LocationOn,
+  ArrowBack,
+  Description,
+  PersonAdd,
+  PersonRemove,
+} from "@mui/icons-material";
+import { Event } from "@/types";
+import { formatFullDateTime } from "@/lib/utils/dateFormatter";
+import { EventMap } from "@/components/maps/EventMap";
+import { EventHeader } from "./detail/EventHeader";
+import { EventInfoSection } from "./detail/EventInfoSection";
+import { EventMetadata } from "./detail/EventMetadata";
+import {
+  useEventAttendances,
+  useCreateAttendance,
+  useDeleteAttendance,
+} from "@/hooks/api";
+import { useAuth } from "@/hooks/useAuth";
+import { useState } from "react";
 
 interface EventDetailProps {
   event: Event;
@@ -34,26 +50,27 @@ export function EventDetail({
 }: EventDetailProps) {
   const { user } = useAuth();
   const [error, setError] = useState<string | null>(null);
-  
+
   // Fetch attendances for this event
-  const { data: attendances = [], isLoading: attendancesLoading } = useEventAttendances(event.id);
-  
+  const { data: attendances = [], isLoading: attendancesLoading } =
+    useEventAttendances(event.id);
+
   // Mutations
   const createAttendance = useCreateAttendance();
   const deleteAttendance = useDeleteAttendance();
-  
+
   // Check if current user is attending
-  const userAttendance = attendances.find(a => a.userId === user?.id);
+  const userAttendance = attendances.find((a) => a.userId === user?.id);
   const isAttending = !!userAttendance;
   const attendeesCount = attendances.length;
-  
+
   // Handle join event
   const handleJoinEvent = async () => {
     if (!user) {
-      setError('Ви повинні увійти щоб приєднатися до події');
+      setError("Ви повинні увійти щоб приєднатися до події");
       return;
     }
-    
+
     try {
       setError(null);
       await createAttendance.mutateAsync({
@@ -62,23 +79,27 @@ export function EventDetail({
       });
     } catch (err) {
       const error = err as any;
-      setError(error.response?.data?.message || 'Не вдалося приєднатися до події');
+      setError(
+        error.response?.data?.message || "Не вдалося приєднатися до події",
+      );
     }
   };
-  
+
   // Handle leave event
   const handleLeaveEvent = async () => {
     if (!userAttendance) return;
-    
+
     try {
       setError(null);
       await deleteAttendance.mutateAsync(userAttendance.id);
     } catch (err) {
       const error = err as any;
-      setError(error.response?.data?.message || 'Не вдалося відписатися від події');
+      setError(
+        error.response?.data?.message || "Не вдалося відписатися від події",
+      );
     }
   };
-  
+
   const isProcessing = createAttendance.isPending || deleteAttendance.isPending;
 
   return (
@@ -100,15 +121,19 @@ export function EventDetail({
           />
 
           <Divider sx={{ my: 3 }} />
-          
+
           {/* Attendance section */}
           <Box sx={{ mb: 3 }}>
             {error && (
-              <Alert severity="error" sx={{ mb: 2 }} onClose={() => setError(null)}>
+              <Alert
+                severity="error"
+                sx={{ mb: 2 }}
+                onClose={() => setError(null)}
+              >
                 {error}
               </Alert>
             )}
-            
+
             <Stack direction="row" spacing={2} alignItems="center">
               {attendancesLoading ? (
                 <CircularProgress size={24} />
@@ -117,13 +142,19 @@ export function EventDetail({
                   <Typography variant="body2" color="text.secondary">
                     Members: {attendeesCount}
                   </Typography>
-                  
-                  {user && (
-                    isAttending ? (
+
+                  {user &&
+                    (isAttending ? (
                       <Button
                         variant="outlined"
                         color="secondary"
-                        startIcon={isProcessing ? <CircularProgress size={16} /> : <PersonRemove />}
+                        startIcon={
+                          isProcessing ? (
+                            <CircularProgress size={16} />
+                          ) : (
+                            <PersonRemove />
+                          )
+                        }
                         onClick={handleLeaveEvent}
                         disabled={isProcessing}
                       >
@@ -133,14 +164,19 @@ export function EventDetail({
                       <Button
                         variant="contained"
                         color="primary"
-                        startIcon={isProcessing ? <CircularProgress size={16} /> : <PersonAdd />}
+                        startIcon={
+                          isProcessing ? (
+                            <CircularProgress size={16} />
+                          ) : (
+                            <PersonAdd />
+                          )
+                        }
                         onClick={handleJoinEvent}
                         disabled={isProcessing}
                       >
                         Connect
                       </Button>
-                    )
-                  )}
+                    ))}
                 </>
               )}
             </Stack>
@@ -172,7 +208,7 @@ export function EventDetail({
             </EventInfoSection>
 
             <EventInfoSection icon={Description} title="Description">
-              <Typography variant="body1" sx={{ whiteSpace: 'pre-wrap' }}>
+              <Typography variant="body1" sx={{ whiteSpace: "pre-wrap" }}>
                 {event.description}
               </Typography>
             </EventInfoSection>

@@ -3,12 +3,12 @@
  * Displays a grid of event cards with pagination
  */
 
-'use client';
+"use client";
 
-import { Box, Typography, Pagination, Skeleton } from '@mui/material';
-import { EventOutlined } from '@mui/icons-material';
-import { Event } from '@/types';
-import { EventCard } from './EventCard';
+import { Box, Typography, Pagination, Skeleton } from "@mui/material";
+import { EventOutlined } from "@mui/icons-material";
+import { Event } from "@/types";
+import { EventCard } from "./EventCard";
 
 interface EventListProps {
   events: Event[];
@@ -35,16 +35,15 @@ export function EventList({
   onEditEvent,
   onDeleteEvent,
 }: EventListProps) {
-  // Loading skeleton
   if (loading) {
     return (
       <Box
         sx={{
-          display: 'grid',
+          display: "grid",
           gridTemplateColumns: {
-            xs: '1fr',
-            sm: 'repeat(2, 1fr)',
-            md: 'repeat(3, 1fr)',
+            xs: "1fr",
+            sm: "repeat(2, 1fr)",
+            md: "repeat(3, 1fr)",
           },
           gap: 3,
         }}
@@ -61,26 +60,43 @@ export function EventList({
     );
   }
 
-  // Empty state
   if (!events || events.length === 0) {
     return (
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          py: 8,
-        }}
-      >
-        <EventOutlined sx={{ fontSize: 64, color: 'text.secondary', mb: 2 }} />
-        <Typography variant="h6" color="text.secondary" gutterBottom>
-          No events found
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Try adjusting your filters or create a new event
-        </Typography>
-      </Box>
+      <>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            py: 8,
+          }}
+        >
+          <EventOutlined
+            sx={{ fontSize: 64, color: "text.secondary", mb: 2 }}
+          />
+          <Typography variant="h6" color="text.secondary" gutterBottom>
+            No events found
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Try adjusting your filters or create a new event
+          </Typography>
+        </Box>
+
+        {totalPages > 1 && (
+          <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
+            <Pagination
+              count={totalPages}
+              page={currentPage}
+              onChange={(_, page) => onPageChange(page)}
+              color="primary"
+              size="large"
+              showFirstButton
+              showLastButton
+            />
+          </Box>
+        )}
+      </>
     );
   }
 
@@ -89,11 +105,11 @@ export function EventList({
       {/* Event Grid */}
       <Box
         sx={{
-          display: 'grid',
+          display: "grid",
           gridTemplateColumns: {
-            xs: '1fr',
-            sm: 'repeat(2, 1fr)',
-            md: 'repeat(3, 1fr)',
+            xs: "1fr",
+            sm: "repeat(2, 1fr)",
+            md: "repeat(3, 1fr)",
           },
           gap: 3,
         }}
@@ -111,7 +127,7 @@ export function EventList({
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+        <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
           <Pagination
             count={totalPages}
             page={currentPage}
@@ -126,4 +142,3 @@ export function EventList({
     </Box>
   );
 }
-

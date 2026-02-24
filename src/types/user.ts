@@ -1,6 +1,3 @@
-import { GlobalResponse } from './api';
-
-
 export interface UserProfile {
   id: string;
   firstName: string;

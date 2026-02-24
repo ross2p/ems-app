@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import { useState, useCallback } from 'react';
-import { useRouter, useSearchParams, usePathname } from 'next/navigation';
-import { Container, Box, Typography, Button, Alert } from '@mui/material';
-import { Add as AddIcon } from '@mui/icons-material';
-import { EventFilters } from '@/components/events/EventFilters';
-import { EventList } from '@/components/events/EventList';
-import { ConfirmationDialog } from '@/components/common/ConfirmationDialog';
-import { useEvents, useDeleteEvent } from '@/hooks/api/useEvents';
-import { EventFilters as EventFiltersType, EventListParams } from '@/types';
-import { parseEventFilters, updateQueryParams } from '@/lib/utils/queryParams';
-import { ROUTES } from '@/lib/constants/routes';
+import { useState, useCallback } from "react";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import { Container, Box, Typography, Button, Alert } from "@mui/material";
+import { Add as AddIcon } from "@mui/icons-material";
+import { EventFilters } from "@/components/events/EventFilters";
+import { EventList } from "@/components/events/EventList";
+import { ConfirmationDialog } from "@/components/common/ConfirmationDialog";
+import { useEvents, useDeleteEvent } from "@/hooks/api/useEvents";
+import { EventFilters as EventFiltersType, EventListParams } from "@/types";
+import { parseEventFilters, updateQueryParams } from "@/lib/utils/queryParams";
+import { ROUTES } from "@/lib/constants/routes";
 
 export function EventsPageContainer() {
   const router = useRouter();
@@ -36,9 +36,9 @@ export function EventsPageContainer() {
     (newFilters: EventListParams) => {
       setFilters(newFilters);
       const url = updateQueryParams(pathname, newFilters);
-      window.history.pushState({}, '', url);
+      window.history.pushState({}, "", url);
     },
-    [pathname]
+    [pathname],
   );
 
   const handleFiltersChange = useCallback(
@@ -49,7 +49,7 @@ export function EventsPageContainer() {
         pageNumber: 1,
       });
     },
-    [filters, updateFiltersAndUrl]
+    [filters, updateFiltersAndUrl],
   );
 
   const handleClearFilters = useCallback(() => {
@@ -66,7 +66,7 @@ export function EventsPageContainer() {
         pageNumber: page,
       });
     },
-    [filters, updateFiltersAndUrl]
+    [filters, updateFiltersAndUrl],
   );
 
   const handleDeleteEvent = useCallback((id: string) => {
@@ -81,8 +81,8 @@ export function EventsPageContainer() {
       await deleteEvent.mutateAsync(eventToDelete);
       setEventToDelete(null);
     } catch (err) {
-      setDeleteError('Failed to delete event. Please try again.');
-      console.error('Error deleting event:', err);
+      setDeleteError("Failed to delete event. Please try again.");
+      console.error("Error deleting event:", err);
     }
   };
 
@@ -90,9 +90,9 @@ export function EventsPageContainer() {
     <Container maxWidth="lg" sx={{ py: 4 }}>
       <Box
         sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
           mb: 4,
         }}
       >
@@ -122,7 +122,11 @@ export function EventsPageContainer() {
       )}
 
       {deleteError && (
-        <Alert severity="error" sx={{ mb: 3 }} onClose={() => setDeleteError(null)}>
+        <Alert
+          severity="error"
+          sx={{ mb: 3 }}
+          onClose={() => setDeleteError(null)}
+        >
           {deleteError}
         </Alert>
       )}
@@ -131,7 +135,7 @@ export function EventsPageContainer() {
         events={data?.content || []}
         loading={isLoading}
         currentPage={filters.pageNumber || 1}
-        totalPages={data?.totalPages || 1}
+        totalPages={data?.pageCount || 1}
         onPageChange={handlePageChange}
         onViewEvent={(id) => router.push(ROUTES.DASHBOARD.EVENTS.DETAIL(id))}
         onEditEvent={(id) => router.push(ROUTES.DASHBOARD.EVENTS.EDIT(id))}

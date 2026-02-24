@@ -5,11 +5,10 @@ export interface GlobalResponse<T = unknown> {
   data: T | null;
 }
 
-
 export interface PageResponse<T> {
   content: T[];
-  totalElements: number;
-  totalPages: number;
+  totalCount: number;
+  pageCount: number;
   pageNumber: number;
   pageSize: number;
 }
