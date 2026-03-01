@@ -1,6 +1,6 @@
 'use client';
 
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, Controller, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Button, Paper, Typography, CircularProgress, Stack } from '@mui/material';
 import { Save as SaveIcon, Cancel as CancelIcon } from '@mui/icons-material';
@@ -31,7 +31,6 @@ export function EventForm({
     control,
     handleSubmit,
     setValue,
-    watch,
   } = useForm<EventFormData>({
     resolver: zodResolver(eventFormSchema),
     defaultValues: {
@@ -46,9 +45,9 @@ export function EventForm({
     },
   });
 
-  const location = watch('location');
-  const latitude = watch('latitude');
-  const longitude = watch('longitude');
+  const location = useWatch({ control, name: 'location', defaultValue: '' });
+  const latitude = useWatch({ control, name: 'latitude', defaultValue: undefined });
+  const longitude = useWatch({ control, name: 'longitude', defaultValue: undefined });
 
   return (
     <Paper sx={{ p: 3 }}>
